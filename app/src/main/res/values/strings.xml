@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">JuegoPicoBotellaG8</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="textHome">Presióname</string>
+    <string name="texto_reglas">Hello blank fragment</string>
+    <string name="reglas_del_juego">Reglas del juego</string>
+    <string name="como_se_juega">¿Cómo se juega?</string>
+    <string name="descripcion">Los jugadores forman un círculo y en el centro colocan el dispositivo móvil, luego tocan el botón parpadeante para girar la botella. El jugador que señale la botella debe cumplir el reto que lanza la app, de lo contrario abandona el juego.</string>
+    <string name="quien_gana">¿Quién gana?</string>
+    <string name="ganador_description">Gana el último jugador que no abandone el juego.</string>
+    <string name="TitleSplash">pico botella</string>
+    <string name="TitleRetos">Retos</string>
+    <string name="closeDialogRetos">Cerrar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="guardar">Guardar</string>
+    <string name="escribe_el_reto">Escribe el reto</string>
+    <string name="editar_reto">Editar reto</string>
+    <string name="agregar_reto">Agregar reto</string>
+    <string name="desea_eliminar_el_siguiente_reto">¿Desea eliminar el siguiente reto?:</string>
+    <string name="lore_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit</string>
+    <string name="no">NO</string>
+    <string name="si">SI</string>
+    <string name="des_add_reto">Añadir reto</string>
+    <string name="des_edit_reto">Editar reto</string>
+    <string name="des_delete_reto">Eliminar reto</string>
+</resources>

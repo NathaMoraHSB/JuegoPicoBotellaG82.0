@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/customToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@drawable/toolbar_background"
+        android:padding="5dp"
+        android:theme="@style/ToolbarTheme">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginEnd="17dp"
+            android:gravity="center"
+            android:weightSum="5">
+
+            <!-- Botón para calificar la app -->
+            <ImageView
+                android:id="@+id/btnRateApp"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_star"
+                android:contentDescription="Calificar" />
+
+            <!-- Botón para audio -->
+            <ImageView
+                android:id="@+id/btnToggleAudio"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_audio_on"
+                android:contentDescription="Audio" />
+
+            <!-- Botón para instrucciones del juego -->
+            <ImageView
+                android:id="@+id/btnInstructions"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_instructions"
+                android:contentDescription="Instrucciones" />
+
+            <!-- Botón para ver/agregar retos -->
+            <ImageView
+                android:id="@+id/btnChallenges"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_challenger"
+                android:contentDescription="Retos" />
+
+            <!-- Botón para compartir la app -->
+            <ImageView
+                android:id="@+id/btnShareApp"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_share"
+                android:contentDescription="Compartir" />
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+</layout>

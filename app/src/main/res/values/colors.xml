@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background_general">#414141</color>
+    <color name="edit_icon">#147d5f</color>
+    <color name="delete_icon">#850e0e</color>
+    <color name="challenge_icon">#f07800</color>
+    <color name="titles">#fc3900</color>
+    <color name="orange">#FC3901</color>
+    <color name="gray_dark">#424242</color>
+    <color name="gray_light">#59424242</color>
+    <color name="white_color">#FFFFFF</color>
+
+</resources>

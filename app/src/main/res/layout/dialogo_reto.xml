@@ -1,0 +1,66 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        tools:context=".view.fragment.DialogoRetoFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contenedor_dialogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/dialogo_reto_aleatorio"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/reto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="60dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/contenedor_dialogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/contenedor_dialogo" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/pokemon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/estilo_pokemon"
+            android:padding="2dp"
+            app:layout_constraintBottom_toTopOf="@id/contenedor_dialogo"
+            app:layout_constraintEnd_toEndOf="@id/contenedor_dialogo"
+            app:layout_constraintStart_toStartOf="@id/contenedor_dialogo"
+            app:layout_constraintTop_toTopOf="@id/contenedor_dialogo"
+            tools:ignore="ContentDescription" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCerrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cerrar_dialogo"
+            android:text="@string/closeDialogRetos"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="@id/contenedor_dialogo"
+            app:layout_constraintEnd_toEndOf="@id/contenedor_dialogo"
+            app:layout_constraintStart_toStartOf="@id/contenedor_dialogo"
+            app:layout_constraintTop_toBottomOf="@id/contenedor_dialogo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
