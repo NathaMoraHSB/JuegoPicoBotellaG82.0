@@ -23,4 +23,7 @@
     <string name="des_add_reto">Añadir reto</string>
     <string name="des_edit_reto">Editar reto</string>
     <string name="des_delete_reto">Eliminar reto</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="registrarse">Registrarse</string>
 </resources>
