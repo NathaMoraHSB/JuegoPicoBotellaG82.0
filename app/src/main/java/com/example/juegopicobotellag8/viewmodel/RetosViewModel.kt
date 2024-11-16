@@ -7,18 +7,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.juegopicobotellag8.model.Retos
 import com.example.juegopicobotellag8.repository.RetosRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class RetosViewModel(application: Application) : AndroidViewModel(application) {
-    val context = getApplication<Application>()
-    private val retosRepository = RetosRepository(context)
-
+@HiltViewModel
+class RetosViewModel @Inject constructor(
+    application: Application,
+    private val retosRepository: RetosRepository
+) : AndroidViewModel(application) {
 
     private val _listRetos = MutableLiveData<MutableList<Retos>>()
     val listRetos: LiveData<MutableList<Retos>> get() = _listRetos
-
-
 
     fun saveRetos(retos: Retos) {
         viewModelScope.launch {
@@ -46,6 +46,4 @@ class RetosViewModel(application: Application) : AndroidViewModel(application) {
             _listRetos.value = retosRepository.getListRetos()
         }
     }
-
 }
-

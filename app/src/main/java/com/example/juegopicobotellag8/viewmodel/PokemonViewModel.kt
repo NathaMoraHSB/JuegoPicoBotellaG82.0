@@ -8,23 +8,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.juegopicobotellag8.model.Pokemon
 import com.example.juegopicobotellag8.repository.PokemonRepository
-import com.example.juegopicobotellag8.repository.RetosRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class PokemonViewModel (application: Application): AndroidViewModel(application) {
+@HiltViewModel
+class PokemonViewModel @Inject constructor(
+    application: Application,
+    private val pokemonRepository: PokemonRepository
+) : AndroidViewModel(application) {
 
-    val context = getApplication<Application>()
-    private val PokemonRepository = PokemonRepository(application)
-
-    private val _list_pokemon = MutableLiveData<MutableList<Pokemon>>()
-    val list_pokemon: LiveData<MutableList<Pokemon>> = _list_pokemon
+    private val _listPokemon = MutableLiveData<MutableList<Pokemon>>()
+    val listPokemon: LiveData<MutableList<Pokemon>> = _listPokemon
 
     fun getPokemons() {
         viewModelScope.launch {
             try {
-                _list_pokemon.value = PokemonRepository.getPokemons()
+                _listPokemon.value = pokemonRepository.getPokemons()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
