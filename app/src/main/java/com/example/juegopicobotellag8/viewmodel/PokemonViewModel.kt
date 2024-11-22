@@ -14,9 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PokemonViewModel @Inject constructor(
-    application: Application,
     private val pokemonRepository: PokemonRepository
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private val _listPokemon = MutableLiveData<MutableList<Pokemon>>()
     val listPokemon: LiveData<MutableList<Pokemon>> = _listPokemon

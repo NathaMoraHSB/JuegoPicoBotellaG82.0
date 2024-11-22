@@ -12,11 +12,10 @@ import kotlin.random.Random
 
 class DialogoReto {
     companion object {
-
         fun showDialogoReto(
             fragment: HomeFragment,
-            PokemonViewModel: PokemonViewModel,
-            retoViewModel: RetosViewModel,
+            pokemonViewModel: PokemonViewModel,
+            retosViewModel: RetosViewModel,
             onCloseCallback: () -> Unit
         ) {
             val inflater = LayoutInflater.from(fragment.requireContext())
@@ -27,38 +26,31 @@ class DialogoReto {
             alertDialog.setCancelable(false)
             alertDialog.setView(binding.root)
 
-            PokemonViewModel.getPokemons()
-            fragment.view?.let { view ->
-                PokemonViewModel.list_pokemon.observe(fragment.viewLifecycleOwner) { lista ->
-                    val pokemon = lista[Random.nextInt(1,151)]
-
-                    val options = RequestOptions()
-                        .circleCrop()
-
+            pokemonViewModel.getPokemons()
+            pokemonViewModel.listPokemon.observe(fragment.viewLifecycleOwner) { lista ->
+                if (lista.isNotEmpty()) {
+                    val pokemon = lista[Random.nextInt(lista.size)]
+                    val options = RequestOptions().circleCrop()
                     Glide.with(binding.root.context)
                         .load(pokemon.image)
-                        //.placeholder(R.drawable.ic_person_wms) // Imagen mientras carga
-                        //.error(R.drawable.ic_person_wms) // Imagen si falla la carga
                         .apply(options)
                         .into(binding.pokemon)
                 }
             }
 
-            retoViewModel.getListRetos()
-            fragment.view?.let { view ->
-                retoViewModel.listRetos.observe(fragment.viewLifecycleOwner){ lista ->
+            retosViewModel.getListRetos()
+            retosViewModel.listRetos.observe(fragment.viewLifecycleOwner) { lista ->
+                if (lista.isNotEmpty()) {
                     val retos = lista[Random.nextInt(lista.size)]
                     binding.reto.text = retos.description
                 }
             }
 
             binding.btnCerrar.setOnClickListener {
-                //Toast.makeText(fragment.requireContext(), "Reto cerrado", Toast.LENGTH_SHORT).show()
                 onCloseCallback.invoke()
                 alertDialog.dismiss()
             }
             alertDialog.show()
-
         }
     }
 }
