@@ -1,11 +1,32 @@
 package com.example.juegopicobotellag8.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.io.Serializable
+import android.os.Parcel
+import android.os.Parcelable
 
-@Entity
 data class Retos(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val description: String): Serializable
+    val id: String? = null,
+    val description: String = ""): Parcelable {
+        constructor(parcel: Parcel) : this(
+            parcel.readString(),
+            parcel.readString() ?: ""
+        )
+
+        override fun writeToParcel(parcel: Parcel, flags: Int){
+            parcel.writeString(id)
+            parcel.writeString(description)
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+
+        companion object CREATOR : Parcelable.Creator<Retos> {
+            override fun createFromParcel(parcel: Parcel): Retos {
+                return Retos(parcel)
+            }
+
+            override fun newArray(size: Int): Array<Retos?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }

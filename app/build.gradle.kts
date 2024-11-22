@@ -2,8 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
-    //id("kotlin-kapt")
-    //id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -82,10 +83,10 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
 
     // Room
-    implementation ("androidx.room:room-runtime:2.5.2")
-    implementation ("androidx.room:room-ktx:2.5.2")
-    ksp("androidx.room:room-compiler:2.5.2")
-    implementation ("com.getbase:floatingactionbutton:1.10.1")
+    //implementation ("androidx.room:room-runtime:2.5.2")
+    //implementation ("androidx.room:room-ktx:2.5.2")
+    //ksp("androidx.room:room-compiler:2.5.2")
+    //implementation ("com.getbase:floatingactionbutton:1.10.1")
 
 
     //Retrofit
@@ -100,5 +101,14 @@ dependencies {
 
     //dagger hilt
     implementation("com.google.dagger:hilt-android:2.47")
-    //kapt("com.google.dagger:hilt-android-compiler:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+
+    //firestore:
+    //implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
+    implementation("com.google.firebase:firebase-firestore")
+
+    implementation(libs.firebase.database.ktx)
 }

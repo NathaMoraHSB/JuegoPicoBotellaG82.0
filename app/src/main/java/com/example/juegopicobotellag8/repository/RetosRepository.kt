@@ -1,26 +1,50 @@
 package com.example.juegopicobotellag8.repository
-import android.content.Context
-import com.example.juegopicobotellag8.data.RetosDB
-import com.example.juegopicobotellag8.data.RetosDao
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.juegopicobotellag8.model.Retos
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.google.firebase.firestore.FirebaseFirestore
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RetosRepository(val context: Context){
-    private var retosDao:RetosDao = RetosDB.getDatabase(context).retosDao()
-     suspend fun saveRetos(retos:Retos){
-         withContext(Dispatchers.IO){
-             retosDao.saveRetos(retos)
-         }
+@Singleton
+class RetosRepository @Inject constructor(private val firestore: FirebaseFirestore){
+    //private var retosDao:RetosDao = RetosDB.getDatabase(context).retosDao()
+    private val retosCollection = firestore.collection("retos")
+
+     fun saveRetos(retos:Retos, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        retos.id?.let {
+            retosCollection.document(it)
+                .set(retos)
+                .addOnSuccessListener {
+                    onSuccess()
+                }
+                .addOnFailureListener { exception ->
+                    onFailure(exception)
+                }
+        }
      }
 
-    suspend fun getListRetos():MutableList<Retos>{
-        return withContext(Dispatchers.IO){
-            retosDao.getListRetos()
+    fun getListRetos():LiveData<MutableList<Retos>>{
+        val mutableData = MutableLiveData<MutableList<Retos>>()
+        retosCollection.get().addOnSuccessListener { result ->
+            val listData = mutableListOf<Retos>()
+            for (reto in result){
+                val id = reto.getString("id")
+                val description = reto.getString("description")
+
+                val retos = Retos(
+                    id!!,
+                    description!!
+                )
+
+                listData.add(retos)
+            }
+            mutableData.value = listData
         }
+        return mutableData
     }
 
-    suspend fun deleteRetos(retos: Retos){
+    /*suspend fun deleteRetos(retos: Retos){
         withContext(Dispatchers.IO){
             retosDao.deleteRetos(retos)
         }
@@ -30,5 +54,5 @@ class RetosRepository(val context: Context){
         withContext(Dispatchers.IO){
             retosDao.updateRetos(retos)
         }
-    }
+    }*/
 }

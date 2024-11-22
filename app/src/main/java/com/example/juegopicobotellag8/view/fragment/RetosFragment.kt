@@ -66,14 +66,14 @@ class RetosFragment : Fragment() {
 
     private fun observerListRetos() {
         retosViewModel.getListRetos()
-        retosViewModel.listRetos.observe(viewLifecycleOwner){ listRetos ->
+        /*retosViewModel.listRetos.observe(viewLifecycleOwner){ listRetos ->
             val recycler: RecyclerView = binding.recyclerview
             val layoutManager = LinearLayoutManager(context)
             recycler.layoutManager = layoutManager
             val adapter = RetosAdapter(listRetos, retosViewModel)
             recycler.adapter = adapter
             adapter.notifyDataSetChanged()
-        }
+        }*/
     }
 
     private fun showAddDialog(context: Context) {

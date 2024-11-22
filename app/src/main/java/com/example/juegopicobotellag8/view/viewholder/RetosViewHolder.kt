@@ -58,7 +58,7 @@ class RetosViewHolder(
                     .show()
                 if (reto.isNotBlank()) {
                     val retoObj = Retos(description = reto, id = retos.id)
-                    retosViewModel.updateRetos(retoObj)
+                    //retosViewModel.updateRetos(retoObj)
                     Toast.makeText(
                         bindingItem.root.context,
                         "Reto Actualizado: $reto",
@@ -118,7 +118,7 @@ class RetosViewHolder(
             }
 
             deleteButton.setOnClickListener {
-                retosViewModel.deleteRetos(retos)
+                //retosViewModel.deleteRetos(retos)
                 Toast.makeText(
                     bindingItem.root.context,
                     "Reto Eliminado: ${retos.description}",
