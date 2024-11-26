@@ -12,7 +12,6 @@ import com.example.juegopicobotellag8.databinding.ItemRetoBinding
 import com.example.juegopicobotellag8.model.Retos
 import com.example.juegopicobotellag8.viewmodel.RetosViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
@@ -22,6 +21,7 @@ class RetosViewHolder @Inject constructor(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun setItemRetos(retos: Retos) {
+        binding.executePendingBindings()
         binding.textSection.text = retos.description
 
         // Acción para editar un reto
@@ -49,7 +49,7 @@ class RetosViewHolder @Inject constructor(
             saveButton.setOnClickListener {
                 val reto = inputField.text.toString()
                 if (reto.isNotBlank()) {
-                    val retoObj = Retos(description = reto, id = retos.id)
+                    val retoObj = Retos(id = retos.id, description = reto)
                     retosViewModel.updateRetos(retoObj)
                     Toast.makeText(
                         binding.root.context,
