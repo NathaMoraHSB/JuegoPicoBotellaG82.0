@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -42,18 +43,19 @@ class LoginFragment : Fragment() {
 
         val textWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val isNotEmpty = emailField.text.isNotEmpty() && passwordField.text.isNotEmpty()
-                registerButton.isEnabled = isNotEmpty
-                loginButton.isEnabled = isNotEmpty
+                val isNotEmpty = emailField.text.isNotEmpty() && passwordField.text.isNotEmpty() && passwordField.text.toString().length >= 6
 
                 val password = passwordField.text.toString()
                 if (password.length < 6) {
                     binding.tilPassword.error = "Mínimo 6 dígitos"
                     binding.tilPassword.boxStrokeColor = resources.getColor(android.R.color.holo_red_light, null)
+                    handleLoginAndRegisterButtons(isNotEmpty, registerButton, loginButton)
                 } else {
                     binding.tilPassword.error = null
                     binding.tilPassword.boxStrokeColor = resources.getColor(android.R.color.white, null)
+                    handleLoginAndRegisterButtons(isNotEmpty, registerButton, loginButton)
                 }
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -70,6 +72,13 @@ class LoginFragment : Fragment() {
         loginButton.setOnClickListener {
             loginUser()
         }
+    }
+
+    private fun handleLoginAndRegisterButtons(isNotEmpty: Boolean, registerButton: Button, loginButton: Button) {
+        registerButton.isEnabled = isNotEmpty
+        loginButton.isEnabled = isNotEmpty
+        loginButton.backgroundTintList = if (isNotEmpty) resources.getColorStateList(android.R.color.white, null) else resources.getColorStateList(R.color.orange, null)
+        loginButton.setTextColor(if (isNotEmpty) resources.getColor(android.R.color.black, null) else resources.getColor(android.R.color.white, null))
     }
 
     private fun goToHome(email: String?) {
