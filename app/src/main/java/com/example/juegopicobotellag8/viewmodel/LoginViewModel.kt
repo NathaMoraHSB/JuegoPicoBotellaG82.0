@@ -17,7 +17,7 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun sesion(email: String?, isEnableView: (Boolean) -> Unit) {
+    fun session(email: String?, isEnableView: (Boolean) -> Unit) {
         if (email != null) {
             isEnableView(true)
         } else {
