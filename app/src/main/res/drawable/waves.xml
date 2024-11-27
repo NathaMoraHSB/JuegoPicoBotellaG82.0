@@ -1,11 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:width="1080dp"
     android:height="200dp"
     android:viewportWidth="1080"
-    android:viewportHeight="200">
+    android:viewportHeight="300"
+    tools:ignore="VectorRaster">
 
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M0,100 C270,150 540,50 810,100 L1080,200 L0,200 Z" />
+        android:pathData="
+          M 0,150
+          C 50,170 135,225 185,180
+          C 350,45 360,180 430,125
+
+          C 530,20 480,240 545,130
+          C 590,15 785,140 610,100
+          C 780,43 740,150 780,125
+
+          C 900,65 870,250 950,150
+          C 1010,40 1080,40 1080,40
+          L 1080,400
+          L 0,400
+          Z" />
 </vector>
