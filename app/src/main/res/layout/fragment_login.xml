@@ -29,13 +29,15 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="96dp"
-            app:boxStrokeColor="@color/gray_lighter"
+            app:boxStrokeColor="@color/white"
             app:boxStrokeWidth="2dp"
-            app:endIconTint="@color/gray_lighter"
-            app:hintTextColor="@color/gray_lighter"
+            app:endIconTint="@color/white"
+            app:hintTextColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/app_title">
+            app:layout_constraintTop_toBottomOf="@id/app_title"
+            app:hintEnabled="true"
+            app:hintAnimationEnabled="true">
 
             <EditText
                 android:id="@+id/email_field"
@@ -44,8 +46,9 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
+                android:maxLength="40"
                 android:textColor="@color/white"
-                android:textColorHint="@color/gray_lighter" />
+                android:textColorHint="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="20dp"
-            app:boxStrokeColor="@color/gray_lighter"
+            app:boxStrokeColor="@color/white"
             app:boxStrokeWidth="2dp"
             app:endIconMode="password_toggle"
             app:endIconTint="@color/gray_lighter"
@@ -73,7 +76,7 @@
                 android:inputType="numberPassword"
                 android:maxLength="10"
                 android:textColor="@color/white"
-                android:textColorHint="@color/gray_lighter" />
+                android:textColorHint="@color/white"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
