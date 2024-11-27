@@ -34,4 +34,12 @@ class LoginRepository {
             isLoginComplete(false)
         }
     }
+
+    fun logout() {
+        firebaseAuth.signOut()
+    }
+
+    fun isUserLogged(): Boolean {
+        return firebaseAuth.currentUser != null
+    }
 }
