@@ -59,7 +59,7 @@
     app:boxStrokeColor="@color/gray_lighter"
     app:boxStrokeWidth="2dp"
     app:endIconMode="password_toggle"
-    app:endIconTint="@color/gray_lighter" 
+    app:endIconTint="@color/gray_lighter"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/tilEmail">
@@ -71,9 +71,9 @@
         android:inputType="textPassword"
         android:maxLength="10"
         android:hint="@string/password"
-        android:textColor="@color/white" <!-- Texto al escribir -->
-    android:textColorHint="@color/gray_lighter" <!-- Color del hint -->
-    android:background="@android:color/transparent" /> <!-- Sin fondo -->
+        android:textColor="@color/white"
+    android:textColorHint="@color/gray_lighter"
+    android:background="@android:color/transparent" />
 
 </com.google.android.material.textfield.TextInputLayout>
 
