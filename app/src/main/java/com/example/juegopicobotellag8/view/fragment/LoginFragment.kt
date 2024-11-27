@@ -45,6 +45,15 @@ class LoginFragment : Fragment() {
                 val isNotEmpty = emailField.text.isNotEmpty() && passwordField.text.isNotEmpty()
                 registerButton.isEnabled = isNotEmpty
                 loginButton.isEnabled = isNotEmpty
+
+                val password = passwordField.text.toString()
+                if (password.length < 6) {
+                    binding.tilPassword.error = "Mínimo 6 dígitos"
+                    binding.tilPassword.boxStrokeColor = resources.getColor(android.R.color.holo_red_light, null)
+                } else {
+                    binding.tilPassword.error = null
+                    binding.tilPassword.boxStrokeColor = resources.getColor(android.R.color.white, null)
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
