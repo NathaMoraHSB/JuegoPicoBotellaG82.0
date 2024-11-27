@@ -65,6 +65,15 @@ class LoginFragment : Fragment() {
         emailField.addTextChangedListener(textWatcher)
         passwordField.addTextChangedListener(textWatcher)
 
+        // Listen for focus changes to adjust the outline color
+        emailField.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) { binding.tilEmail.boxStrokeColor = resources.getColor(android.R.color.white, null) }
+        }
+
+        passwordField.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) { binding.tilPassword.boxStrokeColor = resources.getColor(android.R.color.white, null)}
+        }
+
         registerButton.setOnClickListener {
             registerUser()
         }
