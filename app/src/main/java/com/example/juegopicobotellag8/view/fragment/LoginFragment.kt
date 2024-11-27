@@ -1,18 +1,105 @@
 package com.example.juegopicobotellag8.view.fragment
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.juegopicobotellag8.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
+import com.example.juegopicobotellag8.databinding.FragmentLoginBinding
+import com.example.juegopicobotellag8.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
 
+    private lateinit var binding: FragmentLoginBinding
+    private val loginViewModel: LoginViewModel by viewModels()
+    private lateinit var sharedPreferences: SharedPreferences
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        sharedPreferences = requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE)
+        session()
+        setup()
+        return binding.root
+    }
+
+    private fun setup() {
+        val emailField = binding.emailField
+        val passwordField = binding.passwordField
+        val registerButton = binding.registerButton
+        val loginButton = binding.loginButton
+
+        val textWatcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val isNotEmpty = emailField.text.isNotEmpty() && passwordField.text.isNotEmpty()
+                registerButton.isEnabled = isNotEmpty
+                loginButton.isEnabled = isNotEmpty
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        }
+
+        emailField.addTextChangedListener(textWatcher)
+        passwordField.addTextChangedListener(textWatcher)
+
+        registerButton.setOnClickListener {
+            registerUser()
+        }
+
+        loginButton.setOnClickListener {
+            loginUser()
+        }
+    }
+
+    private fun goToHome(email: String?) {
+        sharedPreferences.edit().putString("email", email).apply()
+        val navController = findNavController()
+        navController.navigate(R.id.action_loginFragment_to_homeFragment)
+    }
+
+
+    private fun registerUser() {
+        val email = binding.emailField.text.toString()
+        val pass = binding.passwordField.text.toString()
+        loginViewModel.registerUser(email, pass) { isRegister ->
+            if (isRegister) {
+                goToHome(email)
+            } else {
+                Toast.makeText(requireContext(), "Error en el registro", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun loginUser() {
+        val email = binding.emailField.text.toString()
+        val pass = binding.passwordField.text.toString()
+        loginViewModel.loginUser(email, pass) { isLogin ->
+            if (isLogin) {
+                goToHome(email)
+            } else {
+                Toast.makeText(requireContext(), "Login incorrecto", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun session() {
+        val email = sharedPreferences.getString("email", null)
+        loginViewModel.session(email) { isEnableView ->
+            if (isEnableView) {
+                goToHome(email)
+            }
+        }
+    }
 }
