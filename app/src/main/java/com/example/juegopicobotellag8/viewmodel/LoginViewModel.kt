@@ -17,8 +17,16 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun session(email: String?, isEnableView: (Boolean) -> Unit) {
-        if (email != null) {
+    fun logout() {
+        repository.logout()
+    }
+
+    private fun isLoggedIn(): Boolean {
+        return repository.isUserLogged()
+    }
+
+    fun session(isEnableView: (Boolean) -> Unit) {
+        if (isLoggedIn()) {
             isEnableView(true)
         } else {
             isEnableView(false)

@@ -1,7 +1,6 @@
 package com.example.juegopicobotellag8.view.fragment
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,14 +21,12 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private val loginViewModel: LoginViewModel by viewModels()
-    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        sharedPreferences = requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE)
         session()
         setup()
         return binding.root
@@ -92,8 +89,7 @@ class LoginFragment : Fragment() {
         )
     }
 
-    private fun goToHome(email: String?) {
-        sharedPreferences.edit().putString("email", email).apply()
+    private fun goToHome() {
         val navController = findNavController()
         navController.navigate(R.id.action_loginFragment_to_homeFragment)
     }
@@ -104,7 +100,7 @@ class LoginFragment : Fragment() {
         val pass = binding.passwordField.text.toString()
         loginViewModel.registerUser(email, pass) { isRegister ->
             if (isRegister) {
-                goToHome(email)
+                goToHome()
             } else {
                 Toast.makeText(requireContext(), "Error en el registro", Toast.LENGTH_SHORT).show()
             }
@@ -116,7 +112,7 @@ class LoginFragment : Fragment() {
         val pass = binding.passwordField.text.toString()
         loginViewModel.loginUser(email, pass) { isLogin ->
             if (isLogin) {
-                goToHome(email)
+                goToHome()
             } else {
                 Toast.makeText(requireContext(), "Login incorrecto", Toast.LENGTH_SHORT).show()
             }
@@ -124,10 +120,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun session() {
-        val email = sharedPreferences.getString("email", null)
-        loginViewModel.session(email) { isEnableView ->
+        loginViewModel.session() { isEnableView ->
             if (isEnableView) {
-                goToHome(email)
+                goToHome()
             }
         }
     }
