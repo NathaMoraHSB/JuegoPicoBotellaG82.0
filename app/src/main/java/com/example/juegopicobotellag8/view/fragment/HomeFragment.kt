@@ -21,6 +21,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.transition.Visibility
 import com.example.juegopicobotellag8.view.DialogoReto.Companion.showDialogoReto
+import com.example.juegopicobotellag8.viewmodel.LoginViewModel
 import com.example.juegopicobotellag8.viewmodel.PokemonViewModel
 import com.example.juegopicobotellag8.viewmodel.RetosViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,7 @@ class HomeFragment : Fragment() {
 
     private val pokemonViewModel: PokemonViewModel by viewModels()
     private val retosViewModel: RetosViewModel by viewModels()
+    private val loginViewModel: LoginViewModel by viewModels()
 
     private var mediaPlayer: MediaPlayer? = null
     private var bgSound: MediaPlayer? = null
@@ -92,6 +94,11 @@ class HomeFragment : Fragment() {
                 toggleBackgroundSound(bgSoundEnabled)
                 updateSoundIcon()
             }
+            btnLogout.setOnClickListener {
+                it.startAnimation(touchAnimation)
+                loginViewModel.logout()
+                navigateTo(R.id.action_homeFragment_to_loginFragment)
+                }
         }
     }
 

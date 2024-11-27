@@ -1,12 +1,12 @@
 package com.example.juegopicobotellag8.view.fragment
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -21,14 +21,12 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private val loginViewModel: LoginViewModel by viewModels()
-    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        sharedPreferences = requireActivity().getSharedPreferences("shared", Context.MODE_PRIVATE)
         session()
         setup()
         return binding.root
@@ -42,9 +40,19 @@ class LoginFragment : Fragment() {
 
         val textWatcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val isNotEmpty = emailField.text.isNotEmpty() && passwordField.text.isNotEmpty()
-                registerButton.isEnabled = isNotEmpty
-                loginButton.isEnabled = isNotEmpty
+                val isNotEmpty = emailField.text.isNotEmpty() && passwordField.text.isNotEmpty() && passwordField.text.toString().length >= 6
+
+                val password = passwordField.text.toString()
+                if (password.length < 6) {
+                    binding.tilPassword.error = "Mínimo 6 dígitos"
+                    binding.tilPassword.boxStrokeColor = resources.getColor(android.R.color.holo_red_light, null)
+                    handleLoginAndRegisterButtons(isNotEmpty, registerButton, loginButton)
+                } else {
+                    binding.tilPassword.error = null
+                    binding.tilPassword.boxStrokeColor = resources.getColor(android.R.color.white, null)
+                    handleLoginAndRegisterButtons(isNotEmpty, registerButton, loginButton)
+                }
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -53,6 +61,15 @@ class LoginFragment : Fragment() {
 
         emailField.addTextChangedListener(textWatcher)
         passwordField.addTextChangedListener(textWatcher)
+
+        // Listen for focus changes to adjust the outline color
+        emailField.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) { binding.tilEmail.boxStrokeColor = resources.getColor(android.R.color.white, null) }
+        }
+
+        passwordField.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) { binding.tilPassword.boxStrokeColor = resources.getColor(android.R.color.white, null)}
+        }
 
         registerButton.setOnClickListener {
             registerUser()
@@ -63,8 +80,16 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun goToHome(email: String?) {
-        sharedPreferences.edit().putString("email", email).apply()
+    private fun handleLoginAndRegisterButtons(isNotEmpty: Boolean, registerButton: Button, loginButton: Button) {
+        registerButton.isEnabled = isNotEmpty
+        loginButton.isEnabled = isNotEmpty
+        loginButton.backgroundTintList = if (isNotEmpty) resources.getColorStateList(android.R.color.white, null) else resources.getColorStateList(R.color.orange, null)
+        loginButton.setTextColor(if (isNotEmpty) resources.getColor(android.R.color.black, null) else resources.getColor(android.R.color.white, null))
+        registerButton.setTextColor(if (isNotEmpty) resources.getColor(android.R.color.white, null) else resources.getColor(R.color.gray_lighter, null)
+        )
+    }
+
+    private fun goToHome() {
         val navController = findNavController()
         navController.navigate(R.id.action_loginFragment_to_homeFragment)
     }
@@ -75,7 +100,7 @@ class LoginFragment : Fragment() {
         val pass = binding.passwordField.text.toString()
         loginViewModel.registerUser(email, pass) { isRegister ->
             if (isRegister) {
-                goToHome(email)
+                goToHome()
             } else {
                 Toast.makeText(requireContext(), "Error en el registro", Toast.LENGTH_SHORT).show()
             }
@@ -87,7 +112,7 @@ class LoginFragment : Fragment() {
         val pass = binding.passwordField.text.toString()
         loginViewModel.loginUser(email, pass) { isLogin ->
             if (isLogin) {
-                goToHome(email)
+                goToHome()
             } else {
                 Toast.makeText(requireContext(), "Login incorrecto", Toast.LENGTH_SHORT).show()
             }
@@ -95,10 +120,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun session() {
-        val email = sharedPreferences.getString("email", null)
-        loginViewModel.session(email) { isEnableView ->
+        loginViewModel.session() { isEnableView ->
             if (isEnableView) {
-                goToHome(email)
+                goToHome()
             }
         }
     }
