@@ -79,6 +79,8 @@ class LoginFragment : Fragment() {
         loginButton.isEnabled = isNotEmpty
         loginButton.backgroundTintList = if (isNotEmpty) resources.getColorStateList(android.R.color.white, null) else resources.getColorStateList(R.color.orange, null)
         loginButton.setTextColor(if (isNotEmpty) resources.getColor(android.R.color.black, null) else resources.getColor(android.R.color.white, null))
+        registerButton.setTextColor(if (isNotEmpty) resources.getColor(android.R.color.white, null) else resources.getColor(R.color.gray_lighter, null)
+        )
     }
 
     private fun goToHome(email: String?) {
