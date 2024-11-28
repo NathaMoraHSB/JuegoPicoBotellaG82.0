@@ -1,6 +1,5 @@
 package com.example.juegopicobotellag8.view.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,7 +15,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.juegopicobotellag8.R
 import com.example.juegopicobotellag8.databinding.FragmentLoginBinding
 import com.example.juegopicobotellag8.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
@@ -93,7 +94,6 @@ class LoginFragment : Fragment() {
         val navController = findNavController()
         navController.navigate(R.id.action_loginFragment_to_homeFragment)
     }
-
 
     private fun registerUser() {
         val email = binding.emailField.text.toString()
