@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.juegopicobotellag8.model.Retos
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -19,6 +20,9 @@ class RetosRepository @Inject constructor(
 
     fun saveRetos(retos:Retos, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         retos.id?.let {
+            // Asigna la fecha y hora actuales al campo created_at
+            retos.created_at = com.google.firebase.Timestamp.now()
+
             retosCollection
                 .document()
                 .set(retos)
@@ -34,27 +38,29 @@ class RetosRepository @Inject constructor(
     fun getListRetos(): LiveData<MutableList<Retos>> {
         val mutableData = MutableLiveData<MutableList<Retos>>()
 
-        retosCollection.addSnapshotListener { querySnapshot, error ->
-            if (error != null) {
-                Log.e("FirestoreError", "Error al escuchar los cambios: ${error.message}")
-                return@addSnapshotListener
-            }
-
-            val listData = mutableListOf<Retos>()
-            querySnapshot?.let { snapshot ->
-                for (document in snapshot) {
-                    val id = document.id
-                    val description = document.getString("description")
-
-                    val retos = Retos(
-                        id,
-                        description!!
-                    )
-                    listData.add(retos)
+        retosCollection
+            .orderBy("created_at", Query.Direction.DESCENDING)
+            .addSnapshotListener { querySnapshot, error ->
+                if (error != null) {
+                    Log.e("FirestoreError", "Error al escuchar los cambios: ${error.message}")
+                    return@addSnapshotListener
                 }
+
+                val listData = mutableListOf<Retos>()
+                querySnapshot?.let { snapshot ->
+                    for (document in snapshot) {
+                        val id = document.id
+                        val description = document.getString("description")
+
+                        val retos = Retos(
+                            id,
+                            description!!
+                        )
+                        listData.add(retos)
+                    }
+                }
+                mutableData.value = listData
             }
-            mutableData.value = listData
-        }
 
         return mutableData
     }
