@@ -1,9 +1,14 @@
 package com.example.juegopicobotellag8.viewmodel
+
 import androidx.lifecycle.ViewModel
 import com.example.juegopicobotellag8.repository.LoginRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
-    private val repository = LoginRepository()
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val repository: LoginRepository
+) : ViewModel() {
 
     fun registerUser(email: String, pass: String, isRegister: (Boolean) -> Unit) {
         repository.registerUser(email, pass) { response ->
