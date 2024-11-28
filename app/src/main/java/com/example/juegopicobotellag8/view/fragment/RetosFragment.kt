@@ -1,5 +1,6 @@
 package com.example.juegopicobotellag8.view.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,11 +22,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.UUID
 
-
+@AndroidEntryPoint
 class RetosFragment : Fragment() {
     private lateinit var binding: FragmentRetosFragmentBinding
     private val retosViewModel: RetosViewModel by viewModels()
+    private lateinit var adapter: RetosAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +44,11 @@ class RetosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         controladores()
+        configurarRecyclerView()
         observadorViewModel()
+
+        // Cargar datos
+        retosViewModel.getListRetos()
     }
 
     private fun controladores() {
@@ -61,19 +69,16 @@ class RetosFragment : Fragment() {
     }
 
     private fun observadorViewModel() {
-        observerListRetos()
+        retosViewModel.listRetos.observe(viewLifecycleOwner) { listRetos ->
+            adapter.updateList(listRetos) // Actualiza la lista directamente
+        }
     }
 
-    private fun observerListRetos() {
-        retosViewModel.getListRetos()
-        retosViewModel.listRetos.observe(viewLifecycleOwner){ listRetos ->
-            val recycler: RecyclerView = binding.recyclerview
-            val layoutManager = LinearLayoutManager(context)
-            recycler.layoutManager = layoutManager
-            val adapter = RetosAdapter(listRetos, retosViewModel)
-            recycler.adapter = adapter
-            adapter.notifyDataSetChanged()
-        }
+    private fun configurarRecyclerView() {
+        // Configuración inicial del RecyclerView
+        adapter = RetosAdapter(retosViewModel)
+        binding.recyclerview.adapter = adapter
+        binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun showAddDialog(context: Context) {

@@ -1,11 +1,10 @@
 package com.example.juegopicobotellag8.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import java.io.Serializable
+import com.google.firebase.Timestamp
 
-@Entity
 data class Retos(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val description: String): Serializable
+    var id: String = "",
+    val description: String = "",
+    var created_at: Timestamp = Timestamp.now()
+) : Serializable
