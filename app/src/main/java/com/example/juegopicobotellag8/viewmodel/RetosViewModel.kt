@@ -17,15 +17,14 @@ class RetosViewModel @Inject constructor(
     private val retosRepository: RetosRepository
 ) : ViewModel() {
 
-    //private val _listRetos = MutableLiveData<MutableList<Retos>>()
-    val listRetos: LiveData<MutableList<Retos>> = retosRepository.getListRetos()
+    private val _listRetos = MutableLiveData<MutableList<Retos>>()
+    val listRetos: LiveData<MutableList<Retos>> get() = _listRetos
 
     fun saveRetos(retos: Retos) {
         viewModelScope.launch {
             retosRepository.saveRetos(retos,
                 onSuccess = {
                     println("Reto agregado correctamente")
-                    retosRepository.getListRetos()
                 },
                 onFailure = { exception ->
                     println("Error al agregar el reto: $exception")
@@ -33,16 +32,17 @@ class RetosViewModel @Inject constructor(
         }
     }
 
-    /*fun getListRetos() {
-        _listRetos.value = retosRepository.getListRetos()
-    }*/
+    fun getListRetos() {
+        retosRepository.getListRetos().observeForever { retos ->
+            _listRetos.value = retos
+        }
+    }
 
     fun updateRetos(retos: Retos) {
         viewModelScope.launch {
             retosRepository.updateRepositoy(retos,
                 onSuccess = {
                     println("Reto actualizado correctamente")
-                    retosRepository.getListRetos()
                 },
                 onFailure = { exception ->
                     println("Error al actualizado el reto: $exception")
@@ -55,7 +55,6 @@ class RetosViewModel @Inject constructor(
             retosRepository.deleteRetos(retos,
                 onSuccess = {
                     println("Reto eliminado correctamente")
-                    retosRepository.getListRetos()
                 },
                 onFailure = { exception ->
                     println("Error al eliminado el reto: $exception")

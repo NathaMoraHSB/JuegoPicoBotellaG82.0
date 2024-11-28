@@ -46,6 +46,9 @@ class RetosFragment : Fragment() {
         controladores()
         configurarRecyclerView()
         observadorViewModel()
+
+        // Cargar datos
+        retosViewModel.getListRetos()
     }
 
     private fun controladores() {
@@ -74,8 +77,8 @@ class RetosFragment : Fragment() {
     private fun configurarRecyclerView() {
         // Configuración inicial del RecyclerView
         adapter = RetosAdapter(retosViewModel)
-        binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerview.adapter = adapter
+        binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun showAddDialog(context: Context) {
