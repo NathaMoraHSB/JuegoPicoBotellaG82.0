@@ -6,6 +6,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
 }
+//apply(from = rootProject.file("jacoco.gradle"))
 
 android {
     namespace = "com.example.juegopicobotellag8"
@@ -49,6 +50,7 @@ android {
 
 dependencies {
     implementation(libs.firebase.firestore.ktx)
+   // testImplementation(libs.testng)
     val navVersion = "2.3.5"
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -58,11 +60,29 @@ dependencies {
     //testing
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.mockito:mockito-core:3.12.4")
-    testImplementation("org.mockito:mockito-inline:3.12.4")
-    testImplementation ("org.mockito:mockito-android:3.11.2")
+   testImplementation("org.mockito:mockito-inline:3.12.4")
+   testImplementation ("org.mockito:mockito-android:3.11.2")
+   testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+   testImplementation ("androidx.arch.core:core-testing:2.2.0")
+   debugImplementation ("org.jacoco:org.jacoco.core:0.8.7")
+
+    testImplementation ("org.mockito.kotlin:mockito-kotlin:4.1.0")
+
+
+    // Coroutines para pruebas con Kotlin
     testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
-    testImplementation ("androidx.arch.core:core-testing:2.2.0")
-    debugImplementation ("org.jacoco:org.jacoco.core:0.8.7")
+
+
+
+
+
+
+
+
+
+
+
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
