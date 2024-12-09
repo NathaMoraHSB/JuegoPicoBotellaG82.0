@@ -39,13 +39,14 @@ class DialogoReto {
                 }
             }
 
-            //retoViewModel.getListRetos()
-            fragment.view?.let { view ->
-                retosViewModel.listRetos.observe(fragment.viewLifecycleOwner, Observer { lista ->
+            retosViewModel.getListRetos()
+            retosViewModel.listRetos.observe(fragment.viewLifecycleOwner, Observer { lista ->
+                if (lista.isNotEmpty()) {
                     val retos = lista[Random.nextInt(lista.size)]
                     binding.reto.text = retos.description
-                })
-            }
+                }
+            })
+
 
             binding.btnCerrar.setOnClickListener {
                 onCloseCallback.invoke()
