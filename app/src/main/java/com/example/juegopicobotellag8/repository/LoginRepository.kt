@@ -28,7 +28,7 @@ class LoginRepository @Inject constructor(
                     if (signInTask.isSuccessful) {
                         isLoginComplete(true)
                     } else {
-                        registerUser(email, pass, isLoginComplete)
+                        isLoginComplete(false)
                     }
                 }
         } else {
